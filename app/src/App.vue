@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Controls from '~/components/Controls.vue'
 import Tree from '~/components/Tree.vue'
 </script>
 
@@ -12,7 +13,7 @@ import Tree from '~/components/Tree.vue'
         Explore our tree view list to see regional pricing details, from continents to cities
       </p>
     </div>
-    <div class="row py-3">
+    <div class="row py-3 gy-3">
       <div class="col-xl-4">
         <h3 class="fs-6">
           Filter by price
@@ -21,46 +22,14 @@ import Tree from '~/components/Tree.vue'
         <input id="filter-price" type="number" class="form-control" placeholder="Filter by price...">
       </div>
       <div class="col-xl-8">
-        <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between mb-3">
-          <div class="d-flex align-items-center flex-wrap gap-2">
-            <button
-              type="button"
-              class="btn btn-primary"
-            >
-              <i class="bi bi-plus-lg" />
-              Add new
-            </button>
-            <div class="btn-group" role="group" aria-label="Move entry in a tree">
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-              >
-                Move up
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-              >
-                Move down
-              </button>
-            </div>
+        <div class="row g-3">
+          <div class="">
+            <Controls />
           </div>
-          <div class="d-flex align-items-center gap-2">
-            <button
-              type="button"
-              class="btn btn-secondary"
-            >
-              Edit entry
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-            >
-              Remove
-            </button>
+          <div class="">
+            <Tree />
           </div>
         </div>
-        <Tree />
       </div>
     </div>
   </div>
