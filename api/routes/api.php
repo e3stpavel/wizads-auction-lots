@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LotsController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,3 +28,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get('/lots', [LotsController::class, 'listRootChildren']);
+Route::get('/lots/{lot}', [LotsController::class, 'listChildrenByParent']);
+Route::post('/lots/{lot}', [LotsController::class, 'createLot']);
