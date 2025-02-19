@@ -40,6 +40,10 @@ import Tree from '~/components/Tree.vue'
   max-width: 48ch;
 }
 
+.fs-7 {
+  font-size: 0.875rem;
+}
+
 .btn {
   --bs-btn-font-size: 0.875rem;
   --bs-btn-font-weight: 500;

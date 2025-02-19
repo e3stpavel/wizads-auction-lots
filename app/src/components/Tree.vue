@@ -90,10 +90,10 @@ async function handleSelect(event: TreeItemSelectEvent<Location>) {
   <div v-else class="card text-center">
     <div class="card-body">
       <i class="bi bi-exclamation-triangle-fill fs-1 text-warning" />
-      <h2 class="card-title fs-5">
+      <h2 class="card-title fs-6">
         Nothing was found
       </h2>
-      <p class="card-text text-body-secondary">
+      <p class="card-text text-body-secondary fs-7">
         Start by adding some locations to the list...
       </p>
     </div>

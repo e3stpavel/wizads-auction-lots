@@ -29,4 +29,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/locations', [LocationsController::class, 'listRoot']);
-Route::get('/locations/{id}', [LocationsController::class, 'listChildren']);
+Route::get('/locations/{id}/children', [LocationsController::class, 'listChildren']);
+Route::post('/locations', [LocationsController::class, 'createRoot']);
+Route::post('/locations/{id}/children', [LocationsController::class, 'createChild']);
