@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\LocationsController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +27,3 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/locations', [LocationsController::class, 'listRoot']);
-Route::get('/locations/{id}/children', [LocationsController::class, 'listChildren']);
-Route::post('/locations', [LocationsController::class, 'createRoot']);
-Route::post('/locations/{id}/children', [LocationsController::class, 'createChild']);

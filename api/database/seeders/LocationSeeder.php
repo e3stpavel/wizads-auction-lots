@@ -14,44 +14,44 @@ class LocationSeeder extends Seeder
         return number_format($price, 2, '.', '');
     }
 
-    private function createLocation(string $name, int $order): Location
-    {
-        return Location::create([
-            'name' => $name,
-            'price' => $this->getRandomPrice(),
-            'item_order' => $order,
-        ]);
-    }
+    //    private function createLocation(string $name, int $order): Location
+    //    {
+    //        return Location::create([
+    //            'name' => $name,
+    //            'price' => $this->getRandomPrice(),
+    //            'item_order' => $order,
+    //        ]);
+    //    }
 
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $city = $this->createLocation('Miami', 1);
-        $city->locations()->saveMany([
-            $this->createLocation('Downtown Server', 1),
-            $this->createLocation('Server near the coast', 2),
-        ]);
-
-        $state = $this->createLocation('Florida, FL', 1);
-        $state->locations()->save($city);
-
-        $country = $this->createLocation('USA', 1);
-        $country->locations()->saveMany([
-            $state,
-            $this->createLocation('California, CA', 2),
-            $this->createLocation('Texas, TX', 3),
-        ]);
-
-        $continent = $this->createLocation('North America', 1);
-        $continent->locations()
-            ->saveMany([
-                $this->createLocation('Canada', 2),
-                $country,
-            ]);
-
-        $this->createLocation('Europe', 2);
-        $this->createLocation('Asia', 3);
+        //        $city = $this->createLocation('Miami', 1);
+        //        $city->locations()->saveMany([
+        //            $this->createLocation('Downtown Server', 1),
+        //            $this->createLocation('Server near the coast', 2),
+        //        ]);
+        //
+        //        $state = $this->createLocation('Florida, FL', 1);
+        //        $state->locations()->save($city);
+        //
+        //        $country = $this->createLocation('USA', 1);
+        //        $country->locations()->saveMany([
+        //            $state,
+        //            $this->createLocation('California, CA', 2),
+        //            $this->createLocation('Texas, TX', 3),
+        //        ]);
+        //
+        //        $continent = $this->createLocation('North America', 1);
+        //        $continent->locations()
+        //            ->saveMany([
+        //                $this->createLocation('Canada', 2),
+        //                $country,
+        //            ]);
+        //
+        //        $this->createLocation('Europe', 2);
+        //        $this->createLocation('Asia', 3);
     }
 }
