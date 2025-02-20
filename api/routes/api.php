@@ -28,6 +28,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/lots', [LotsController::class, 'listRootChildren']);
-Route::get('/lots/{lot}', [LotsController::class, 'listChildrenByParent']);
-Route::post('/lots/{lot}', [LotsController::class, 'createLot']);
+Route::get('/lots/{lot?}', [LotsController::class, 'listLots']);
+Route::post('/lots/{lot?}', [LotsController::class, 'createLot']);
+Route::put('/lots/{lot}', [LotsController::class, 'updateLot']);
+Route::patch('/lots/{lot?}', [LotsController::class, 'moveContainedLots']);
+Route::delete('/lots/{lot}', [LotsController::class, 'deleteLot']);

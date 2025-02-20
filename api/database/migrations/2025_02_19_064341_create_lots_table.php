@@ -17,13 +17,8 @@ return new class extends Migration
             $table->text('name');
             $table->float('price');
 
-            $table->foreignId('parent_id')
-                ->nullable()
-                ->constrained(table: 'lots', column: 'id')
-                ->onDelete('cascade');
-
-            $table->json('children')
-                ->default(new Expression('(json_array())'));
+            $table->json('children');
+            // ->default(new Expression('(json_array())'));
 
             $table->timestamps();
         });

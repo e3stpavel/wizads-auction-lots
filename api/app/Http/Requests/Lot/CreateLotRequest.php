@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Lot;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LotRequest extends FormRequest
+class CreateLotRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'children' => 'nullable|json',
+            'name' => 'required|max:255|not_in:"__root__"',
+            'price' => 'required|numeric|gt:0',
         ];
     }
 

@@ -12,30 +12,26 @@ class LotSeeder extends Seeder
      */
     public function run(): void
     {
-        Lot::create([
-            'name' => 'empty',
-            'price' => 10.9,
-        ]);
-
         $root = Lot::create([
-            'name' => 'root',
+            'name' => '__root__',
             'price' => 0,
         ]);
 
+        $box = Lot::create([
+            'name' => 'Garage box #4826',
+            'price' => 5_000,
+        ]);
         $warehouse = Lot::create([
             'name' => 'Warehouse',
             'price' => 10_000_000,
+            'children' => collect([$box->id]),
         ]);
         $factory = Lot::create([
             'name' => 'Old factory',
             'price' => 50_000_000,
         ]);
 
-        $root->containedLots()->saveMany([$warehouse, $factory]);
-        $root->children = collect([$factory, $warehouse])->map(function (Lot $lot) {
-            return $lot->id;
-        });
-
+        $root->children = collect([$factory, $warehouse])->map(fn (Lot $lot) => $lot->id);
         $root->save();
     }
 }

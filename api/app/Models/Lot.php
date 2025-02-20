@@ -2,28 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lot extends Model
 {
     protected $fillable = [
         'name',
         'price',
-        'children',
     ];
 
-    public function containingLot(): BelongsTo
+    protected $attributes = [
+        'children' => '[]',
+    ];
+
+    /**
+     * @return Collection<Lot>
+     */
+    public function containedLots(): Collection
     {
-        return $this->belongsTo(self::class, 'parent_id', 'id');
+        $self = $this;
+
+        // there is some package but I won't install it
+        return Lot::whereIn('id', $this->children)
+            ->get()
+            ->sortBy(function (Lot $lot) use ($self) {
+                return $self->children->search($lot->id);
+            });
     }
 
-    public function containedLots(): HasMany
+    public function containingLot(): Lot
     {
-        return $this->hasMany(self::class, 'parent_id', 'id');
+        return Lot::whereJsonContains('children', $this->id)
+            ->first();
     }
 
     protected $casts = [
