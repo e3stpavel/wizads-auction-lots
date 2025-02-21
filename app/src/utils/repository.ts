@@ -1,14 +1,18 @@
 import type { Lot, PartialLot } from '~/domain/lot'
+import { useStorage } from '@vueuse/core'
 import { lotSchema, partialLotSchema } from '~/domain/lot'
 import { createFetch } from './fetch'
 
 // as I have only one entity there is no point to abstract repository further
 // eslint-disable-next-line antfu/top-level-function
 export const createLotsRepository = () => {
+  const token = useStorage('access-token', '')
+
   const fetch = createFetch('/lots', {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token.value}`,
     },
   })
 
