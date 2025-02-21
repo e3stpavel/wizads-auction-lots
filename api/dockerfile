@@ -1,0 +1,7 @@
+# by far the easiest way to do this
+#  obviously it is not ready to production
+FROM dunglas/frankenphp
+
+COPY . /app
+
+CMD frankenphp php-server -r public/

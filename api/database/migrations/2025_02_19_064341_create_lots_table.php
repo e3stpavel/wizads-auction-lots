@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -11,17 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('lots', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('name');
             $table->float('price');
-            $table->timestamps();
 
-            $table->integer('item_order');
-            $table->foreignId('parent_location_id')
-                ->nullable()
-                ->constrained(table: 'locations')
-                ->onDelete('cascade');
+            $table->json('children');
+            // ->default(new Expression('(json_array())'));
+
+            $table->timestamps();
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('lots');
     }
 };

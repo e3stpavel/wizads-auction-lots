@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { TreeItemSelectEvent, TreeItemToggleEvent } from 'radix-vue'
-import type { Location } from '~/utils/models/location'
+import type { Lot } from '~/domain/lot'
 import { storeToRefs } from 'pinia'
 import { TreeItem, TreeRoot } from 'radix-vue'
 import { onMounted, reactive, ref } from 'vue'
-import { useLocationsStore } from '~/stores/locations'
+import { useLotsStore } from '~/stores/lots'
 
 const nf = new Intl.NumberFormat('en', {
   style: 'currency',
@@ -12,29 +12,29 @@ const nf = new Intl.NumberFormat('en', {
 })
 
 const expanded = ref<string[]>([])
-const loadingState: Record<Location['id'], boolean> = reactive({})
+const loadingState: Record<Lot['id'], boolean> = reactive({})
 
-const locationsStore = useLocationsStore()
-const { locations, selectedLocation } = storeToRefs(locationsStore)
+const lotsStore = useLotsStore()
+const { lots, selectedLot } = storeToRefs(lotsStore)
 
-onMounted(async () => await locationsStore.getRootLocations())
+onMounted(async () => await lotsStore.getRootLots())
 
-async function handleToggle(event: TreeItemToggleEvent<Location>) {
+async function handleToggle(event: TreeItemToggleEvent<Lot>) {
   const treeItem = event.detail
   if (!treeItem.value)
     return
 
   const item = treeItem.value
-  if (!treeItem.isExpanded && !item.locations && item.locations_count > 0) {
+  if (!treeItem.isExpanded && item.containedLots && item.containedLots.length === 0) {
     loadingState[item.id] = true
-    await locationsStore.getLocationsByParent(item)
+    await lotsStore.getContainedLots(item)
     loadingState[item.id] = false
 
     expanded.value.push(`${item.id}`)
   }
 }
 
-async function handleSelect(event: TreeItemSelectEvent<Location>) {
+async function handleSelect(event: TreeItemSelectEvent<Lot>) {
   const treeItem = event.detail
   if (!treeItem.value)
     return
@@ -42,23 +42,22 @@ async function handleSelect(event: TreeItemSelectEvent<Location>) {
   const item = treeItem.value
 
   if (!treeItem.isSelected) {
-    selectedLocation.value = item
+    selectedLot.value = item
     return
   }
 
-  selectedLocation.value = null
+  selectedLot.value = null
 }
 </script>
 
 <template>
-  <!-- {{ JSON.stringify(locations) }} -->
   <TreeRoot
-    v-if="locations.length !== 0"
+    v-if="lots.length !== 0"
     v-slot="{ flattenItems }"
     v-model:expanded="expanded"
-    :items="locations"
+    :items="lots"
     :get-key="(item) => `${item.id}`"
-    :get-children="(item) => item.locations"
+    :get-children="(item) => item.containedLots"
     class="list-group"
     :class="$style.tree"
   >
@@ -76,7 +75,7 @@ async function handleSelect(event: TreeItemSelectEvent<Location>) {
         <div class="d-flex align-items-center justify-content-between gap-2">
           <div class="d-grid gap-2" :class="$style.container">
             <i v-if="loadingState[item.value.id]" class="bi bi-arrow-repeat" :class="$style.loadingIndicator" />
-            <template v-else-if="item.value.locations_count > 0">
+            <template v-else-if="item.hasChildren">
               <i v-if="isExpanded" class="bi bi-folder2-open" />
               <i v-else class="bi bi-folder2" />
             </template>
@@ -91,10 +90,10 @@ async function handleSelect(event: TreeItemSelectEvent<Location>) {
     <div class="card-body">
       <i class="bi bi-exclamation-triangle-fill fs-1 text-warning" />
       <h2 class="card-title fs-6">
-        Nothing was found
+        No deals were found
       </h2>
       <p class="card-text text-body-secondary fs-7">
-        Start by adding some locations to the list...
+        Start by adding new auction lots to the list...
       </p>
     </div>
   </div>
