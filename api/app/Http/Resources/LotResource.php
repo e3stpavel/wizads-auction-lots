@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Lot;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\MissingValue;
 
 /** @mixin Lot */
 class LotResource extends JsonResource
@@ -19,7 +20,7 @@ class LotResource extends JsonResource
             // because I am designing the API for my frontend
             //  I believe it's alright to include some internal conventions
             'containedLots' => $this->when(
-                $this->children?->count() > 0, [], null
+                $this->children?->count() > 0, [], new MissingValue
             ),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,

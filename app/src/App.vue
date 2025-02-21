@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Controls from '~/components/Controls.vue'
+import { Controls } from '~/components/controls'
 import Tree from '~/components/Tree.vue'
 </script>
 
@@ -7,10 +7,10 @@ import Tree from '~/components/Tree.vue'
   <div class="container py-5">
     <div class="row">
       <h1>
-        Pricing per region
+        Auction Lots
       </h1>
       <p class="text-body-secondary mw-prose">
-        Explore our tree view list to see regional pricing details, from continents to cities
+        Explore our tree view list to see auction lots and their details, from land to baubles
       </p>
     </div>
     <div class="row py-3 gy-3">
@@ -19,7 +19,7 @@ import Tree from '~/components/Tree.vue'
           Filter by price
         </h3>
         <label for="filter-price" class="visually-hidden">Filter by price</label>
-        <input id="filter-price" type="number" class="form-control" placeholder="Filter by price...">
+        <input id="filter-price" type="number" class="form-control fs-7" placeholder="Filter by price...">
       </div>
       <div class="col-xl-8">
         <div class="row g-3">

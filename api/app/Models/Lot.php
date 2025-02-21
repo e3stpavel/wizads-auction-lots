@@ -32,7 +32,7 @@ class Lot extends Model
             });
     }
 
-    public function containingLot(): Lot
+    public function containingLot(): ?Lot
     {
         return Lot::whereJsonContains('children', $this->id)
             ->first();
