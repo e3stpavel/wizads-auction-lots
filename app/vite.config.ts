@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/wizads-auction-lots/',
+
   plugins: [vue()],
 
   resolve: {
